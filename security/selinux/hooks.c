@@ -132,13 +132,18 @@ static int __init enforcing_setup(char *str)
 		selinux_enforcing = 0;
 #else
 
-		selinux_enforcing_boot = enforcing ? 1 : 0;
+//		selinux_enforcing_boot = enforcing ? 1 : 0;
+		selinux_enforcing = enforcing ? 1 : 0;
+#endif
+// ] SEC_SELINUX_PORTING_COMMON	
+	}
+
 	return 1;
 }
 __setup("enforcing=", enforcing_setup);
-#else
+//#else
 #define selinux_enforcing_boot 1
-#endif
+//#endif
 
 #ifdef CONFIG_SECURITY_SELINUX_BOOTPARAM
 int selinux_enabled = CONFIG_SECURITY_SELINUX_BOOTPARAM_VALUE;
@@ -7321,9 +7326,9 @@ static __init int selinux_init(void)
 	if (!security_module_enable("selinux")) {
 
 // [ SEC_SELINUX_PORTING_COMMON
-#ifdef CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE
-		selinux_enabled = 1;
-#else
+//#ifdef CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE
+//		selinux_enabled = 1;
+//#else
 
 		selinux_enabled = 0;
 		return 0;
@@ -7371,6 +7376,7 @@ static __init int selinux_init(void)
 
 
 // [ SEC_SELINUX_PORTING_COMMON
+
 
 #ifdef CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE
 		selinux_enforcing = 1;
